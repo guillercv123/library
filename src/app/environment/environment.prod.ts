@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
 
-  apiUrl: 'https://api.midominio.com/api',
+  apiUrl: '172.31.19.131:3000/api/weather',
 };

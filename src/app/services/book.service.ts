@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { Book } from "../model/book.model";
+import {Book} from '../models/book.model';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
+  public cartCount = signal(0);
+
   loadBooks(): Observable<Book[]> {
     const books: Book[] = [
       { id: 1, name: 'Rama II',         author: 'Arthur C. Clarke', pages: 281, price: 44.23 },
@@ -14,5 +16,9 @@ export class BookService {
     ];
 
     return of(books).pipe(delay(600));
+  }
+
+  addToCart(_book: Book): void {
+    this.cartCount.update((count) => count + 1);
   }
 }

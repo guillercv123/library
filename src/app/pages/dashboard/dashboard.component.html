@@ -1,0 +1,39 @@
+<main class="content">
+  <h1 class="title">Nuestros Libros:</h1>
+
+
+  @if (loaded()) {
+    <table class="books-table">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Autor</th>
+        <th>Páginas</th>
+        <th>Precio</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (book of books(); track book.id) {
+          <tr>
+            <td class="book-name">{{ book.name }}</td>
+            <td>{{ book.author }}</td>
+            <td class="text-center">{{ book.pages }}</td>
+            <td class="text-center">{{ book.price | number: '1.2-2' }}</td>
+            <td>
+              <button class="btn-cart" (click)="addToCart(book)">
+                Agregar al carrito
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <div class="load-wrapper">
+    <button class="btn-load" (click)="loadBooks()" [disabled]="loading()">
+      {{ loading() ? 'Cargando...' : 'Cargar libros' }}
+    </button>
+  </div>
+</main>

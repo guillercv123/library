@@ -1,0 +1,109 @@
+<div class="weather-page" [attr.data-condition]="conditionKey()">
+
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <span class="search-icon">⌕</span>
+      <input
+        #cityInput
+        type="text"
+        placeholder="Buscar ciudad..."
+        [value]="cityQuery()"
+        (keydown.enter)="buscar(cityInput.value)"
+        (input)="cityQuery.set(cityInput.value)"
+      />
+      <button (click)="buscar(cityInput.value)" [disabled]="loading()">
+        {{ loading() ? '...' : 'Buscar' }}
+      </button>
+    </div>
+
+    <button class="btn-location" (click)="usarUbicacion()" title="Usar mi ubicación">
+      ◎ Mi ubicación
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="error-card">
+      ⚠ {{ error() }}
+    </div>
+  }
+
+  @if (weatherStore.weather(); as w) {
+    <div class="weather-card">
+
+      <div class="card-header">
+        <div class="city-block">
+          <h1 class="city-name">{{ w.city }}</h1>
+          <span class="country">{{ w.country }}</span>
+        </div>
+        <div class="timestamp">{{ w.timestamp | date:'EEE d MMM · HH:mm':'':'es' }}</div>
+      </div>
+
+      <div class="temp-hero">
+        <div class="temp-main">
+          <span class="temp-value">{{ w.temperature.current }}</span>
+          <span class="temp-unit">°C</span>
+        </div>
+        <div class="condition-block">
+          <img [src]="w.condition.icon" [alt]="w.condition.description" class="weather-icon" />
+          <div class="condition-texts">
+            <span class="condition-main">{{ w.condition.main }}</span>
+            <span class="condition-desc">{{ w.condition.description }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="temp-range">
+        <div class="range-item">
+          <span class="range-label">Mín</span>
+          <span class="range-val">{{ w.temperature.min }}°</span>
+        </div>
+        <div class="range-divider"></div>
+        <div class="range-item">
+          <span class="range-label">Máx</span>
+          <span class="range-val">{{ w.temperature.max }}°</span>
+        </div>
+        <div class="range-divider"></div>
+        <div class="range-item">
+          <span class="range-label">Sensación</span>
+          <span class="range-val">{{ w.temperature.feelsLike }}°</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">💧</div>
+          <div class="stat-body">
+            <span class="stat-value">{{ w.humidity }}<small>%</small></span>
+            <span class="stat-label">Humedad</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">💨</div>
+          <div class="stat-body">
+            <span class="stat-value">{{ w.wind.speed }}<small> m/s</small></span>
+            <span class="stat-label">Viento</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">👁</div>
+          <div class="stat-body">
+            <span class="stat-value">{{ w.visibility / 1000 | number:'1.0-1' }}<small> km</small></span>
+            <span class="stat-label">Visibilidad</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  }
+
+  @if (!weather() && !loading() && !error()) {
+    <div class="empty-state">
+      <div class="empty-icon">🌤</div>
+      <p>Busca una ciudad para ver el clima</p>
+      <span>Intenta con: Lima, Trujillo, Cusco, Arequipa...</span>
+    </div>
+  }
+
+</div>

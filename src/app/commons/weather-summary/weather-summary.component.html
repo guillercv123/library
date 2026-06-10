@@ -1,0 +1,20 @@
+
+@if (weatherStore.weather(); as w) {
+
+  <div class="weather-pill">
+
+  <img
+    [src]="w.condition.icon"
+    [alt]="w.condition.description">
+  <div>
+    <div class="temp">
+      {{ w.temperature.current }}°
+    </div>
+
+    <div class="condition">
+      {{ w.condition.description }}
+    </div>
+  </div>
+
+</div>
+}

@@ -1,0 +1,29 @@
+.weather-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+
+  color: black;
+}
+
+.weather-pill img {
+  width: 34px;
+  height: 34px;
+}
+
+.temp {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.condition {
+  font-size: .75rem;
+  opacity: .8;
+}
